@@ -136,7 +136,7 @@ class Dataset(object):
                 raise StopIteration
 
     def random_horizontal_flip(self, image, bboxes):
-        if random.random() < 0.5:
+        if random.random() < cfg.TRAIN.AUG_HFLIP_PROB:
             _, w, _ = image.shape
             image = image[:, ::-1, :]
             bboxes[:, [0, 2]] = w - bboxes[:, [2, 0]]
@@ -144,7 +144,7 @@ class Dataset(object):
         return image, bboxes
 
     def random_crop(self, image, bboxes):
-        if random.random() < 0.5:
+        if random.random() < cfg.TRAIN.AUG_CROP_PROB:
             h, w, _ = image.shape
             max_bbox = np.concatenate(
                 [
@@ -180,7 +180,7 @@ class Dataset(object):
         return image, bboxes
 
     def random_translate(self, image, bboxes):
-        if random.random() < 0.5:
+        if random.random() < cfg.TRAIN.AUG_TRANS_PROB:
             h, w, _ = image.shape
             max_bbox = np.concatenate(
                 [
